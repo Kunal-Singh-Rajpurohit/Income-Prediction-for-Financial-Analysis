@@ -12,7 +12,7 @@ engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
 engine.setProperty('rate', 196)
 engine.setProperty('volume', 2.7)
-engine.setProperty('voice', voices[0].id)
+engine.setProperty('voice', voices[1].id)
 
 
 def speak(audio):
@@ -41,7 +41,7 @@ def wish():
         speak("good afternoon")
     else:
         speak("good evening")
-    speak("Hi sir!,I am jarvis sir.how can i help you")
+    speak(" Hi sir!,I am Lisa sir.how can i help you")
 
 with st.sidebar:
     selected = option_menu('Machine Learning in Finance',
@@ -53,23 +53,16 @@ with st.sidebar:
                            icons=['laptop','activity', 'heart', 'person'],
                            default_index=0)
 
-
 if (selected == 'Introduction'):
     wish()
     st.title("Machine Learning in Finance ")
     st.text("Our Team:\n\n")
-    st.text("\n1.Anand Kumar M   Assistant Professor  m_anandkumar@nitk.edu.in")
-    st.text("\n2.M Hemanth Kumar     211AI025   mogilipalemhemanthkumar.211ai025@nitk.edu.in")
-    st.text("\n3.J Deva Paul         211AI021   devapauljatti.211ai021@nitk.edu.in")
-    st.text("\n4.Shashank Reddy M    211AI033   shashankreddymuppidi.211ai033@nitk.edu.in")
-    st.text("\n5.Chudi Dhruv         211AI014   chudidhruv.211ai014@nitk.edu.in")
+    st.text("\n1.Kunal Singh Rajpurohit     211MN023   kunalsinghrajpurohit.211mn023@nitk.edu.in")
+    st.text("\n2.Anil Bediyasar         211MN003   anilbediyasar.211mn003@nitk.edu.in")
     speak("Welcome to the Machine Learning in finance ")
     speak("Our Team is")
-    speak("Anand Kumar")
-    speak("Mogilipalem Hemanth Kumar")
-    speak("Jatti Deva Paul")
-    speak("Shashank Reddy Muppidi")
-    speak("Chudi Dhruv")
+    speak("Kunal Singh Rajpurohit")
+    speak("Anil Bediyasar")
     speak("This Project Consists of Three different options")
     speak("Income Prediction Using census Data")
     speak("Bank Loan Re-Payment Prediction")
@@ -83,7 +76,7 @@ if (selected == 'Income Prediction Using Census data'):
     df = pd.read_csv('adult.data')
     col1, col2, col3,col4 = st.columns(4)
 
-    filename = 'Income.sav'
+    filename = 'Income_data.sav'
     data = pickle.load(open(filename, 'rb'))
 
     with col1:
@@ -273,24 +266,28 @@ if (selected == 'Bank Loan Repayment Prediction'):
         else:
             st.success("Person can't re-Pay Loan")
             #speak("Person can't re-Pay Loan")
-
-if (selected == 'Financial Queries'):
-   # speak("Welcome to Financial Queries")
+            
+if selected == 'Financial Queries':
+    # speak("Welcome to Financial Queries")
     st.title("Financial Queries")
 
     query = st.text_input("Enter the Query: ", key='query1')
+    
+    # Initialize Wikipedia API with a user agent and extract format
     wiki = wikipediaapi.Wikipedia(
         language='en',
+        user_agent="MyApp (strangerdsa123@gmail.com)",
         extract_format=wikipediaapi.ExtractFormat.WIKI
     )
-    p_wiki = wiki.page(query)
+    
     if st.button("Search"):
-        if not p_wiki.exists():
-            st.success("Right now this query can't be answered, Our team is working  on that")
-            speak("Right now this query can't be answered, Our team is working  on that")
+        if query:
+            p_wiki = wiki.page(query)
+            if not p_wiki.exists():
+                st.success("Right now this query can't be answered. Our team is working on that.")
+                speak("Right now this query can't be answered. Our team is working on that.")
+            else:
+                # Display the first 500 characters of the summary
+                st.success(p_wiki.text[:500])
         else:
-            st.success(p_wiki.text[0:500])
-
-
-
-
+            st.warning("Please enter a query.")

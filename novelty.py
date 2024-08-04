@@ -9,7 +9,7 @@ engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
 engine.setProperty('rate', 196)
 engine.setProperty('volume', 2.7)
-engine.setProperty('voice', voices[0].id)
+engine.setProperty('voice', voices[1].id)
 
 def speak(audio):
     engine.say(audio)
@@ -37,7 +37,7 @@ def wish():
         speak("good afternoon")
     else:
         speak("good evening")
-    speak("Hi sir!,I am jarvis sir.how can i help you")
+    speak("Hi sir!,I am meghs sir.how can i help you")
 
 
 st.title("Financial Queries")
